@@ -6,18 +6,17 @@ pub fn run() {
     let mut overlaps = 0;
     let mut contains = 0;
     for line in data.lines() {
-        let pairs: Vec<&str> = line.split(|c| c == '-' || c == ',').collect();
 
-        let a1 = pairs[0].parse::<i32>().unwrap();
-        let a2 = pairs[1].parse::<i32>().unwrap();
-        let b1 = pairs[2].parse::<i32>().unwrap();
-        let b2 = pairs[3].parse::<i32>().unwrap();
+        let pairs: Vec<i32> = line
+        .split(|c| c == '-' || c == ',')
+        .filter_map(|s| s.parse::<i32>().ok())
+        .collect();
 
-        if overlaps_at_all(a1, a2, b1, b2) {
+        if overlaps_at_all(pairs[0], pairs[1], pairs[2], pairs[3]) {
             overlaps += 1;
         }
 
-        if fully_contain(a1, a2, b1, b2) {
+        if fully_contain(pairs[0], pairs[1], pairs[2], pairs[3]) {
             contains += 1;
         }
     }
